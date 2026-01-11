@@ -21,9 +21,9 @@ public class User {
     private String password;
 
     // Optional image (later used in header)
-    @Lob
-    @Column(columnDefinition = "LONGTEXT")
-    private String profileImage; // store filename or URL
+    
+    @Column(columnDefinition = "TEXT")
+    private String profileImage;
 
 	public Long getId() {
 		return id;

@@ -73,18 +73,18 @@
 		  <version>2.11.0</version>
 		</dependency>
 
-	<!-- Spring Security (for BCrypt password encoding) -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
+		<!-- Spring Security (for BCrypt password encoding) -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
 
-<!-- PostgreSQL Driver -->
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <scope>runtime</scope>
-</dependency>
+	<!-- PostgreSQL Driver -->
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <scope>runtime</scope>
+	</dependency>
 
  
 	</dependencies>

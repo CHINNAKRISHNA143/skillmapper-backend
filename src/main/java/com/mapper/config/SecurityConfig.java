@@ -20,47 +20,30 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ CORS Configuration Bean
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOrigins(
-                List.of("*")
-        );
-        configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        );
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // ✅ Enable CORS
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // ✅ VERY IMPORTANT
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOriginPatterns(List.of("*"));
+                config.setAllowedMethods(List.of("*"));
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowCredentials(true);
+                return config;
+            }))
 
-            // ❌ Disable CSRF for APIs
+            // ❌ Disable CSRF
             .csrf(csrf -> csrf.disable())
 
-            // 🔓 Allow all requests for now
+            // 🔓 Allow EVERYTHING for now
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().permitAll()
+                .requestMatchers("/**").permitAll()
             )
 
-            // ❌ Disable login form
+            // ❌ Disable default security
             .formLogin(form -> form.disable())
-
-            // ❌ Disable HTTP Basic
             .httpBasic(basic -> basic.disable());
 
         return http.build();
